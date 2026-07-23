@@ -1,0 +1,6 @@
+@WebApiHandsOn4_HostAddress = http://localhost:5014
+
+GET {{WebApiHandsOn4_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

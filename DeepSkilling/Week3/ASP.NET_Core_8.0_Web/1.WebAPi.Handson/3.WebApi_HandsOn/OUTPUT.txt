@@ -1,0 +1,162 @@
+================================================================================
+ASP.NET CORE 8.0 WEB API HANDS-ON 3 - BUILD & EXECUTION LOGS
+================================================================================
+Project Path: DeepSkilling/Week4/ASP.NET_Core_8.0_Web/3.WebApi_HandsOn/WebApiHandsOn3
+Target Framework: net8.0
+Date of Execution: 2026-07-21 14:43:00
+
+--------------------------------------------------------------------------------
+1. DOTNET BUILD LOG
+--------------------------------------------------------------------------------
+Command: dotnet build
+Determining projects to restore...
+Restored C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week4\ASP.NET_Core_8.0_Web\3.WebApi_HandsOn\WebApiHandsOn3\WebApiHandsOn3.csproj (in 5.38 sec).
+WebApiHandsOn3 -> C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week4\ASP.NET_Core_8.0_Web\3.WebApi_HandsOn\WebApiHandsOn3\bin\Debug\net8.0\WebApiHandsOn3.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:18.47
+
+--------------------------------------------------------------------------------
+2. ENDPOINT VERIFICATION TESTS (CURL & INVOKE-RESTMETHOD)
+--------------------------------------------------------------------------------
+
+[TEST 1] GET /api/Employee/standard (Decorated with [AllowAnonymous])
+Command: curl.exe -i http://localhost:5245/api/Employee/standard
+Response:
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Tue, 21 Jul 2026 09:12:01 GMT
+Server: Kestrel
+
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "salary": 75000,
+    "permanent": true,
+    "department": { "id": 101, "name": "IT Infrastructure" },
+    "skills": [
+      { "id": 1, "name": "C#" },
+      { "id": 2, "name": "ASP.NET Core" },
+      { "id": 3, "name": "SQL Server" }
+    ],
+    "dateOfBirth": "1995-05-15T00:00:00"
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "salary": 85000,
+    "permanent": true,
+    "department": { "id": 102, "name": "Software Development" },
+    "skills": [
+      { "id": 4, "name": "Angular" },
+      { "id": 5, "name": "TypeScript" },
+      { "id": 6, "name": "REST Web API" }
+    ],
+    "dateOfBirth": "1992-08-22T00:00:00"
+  },
+  {
+    "id": 3,
+    "name": "Robert Johnson",
+    "salary": 62000,
+    "permanent": false,
+    "department": { "id": 103, "name": "Human Resources" },
+    "skills": [
+      { "id": 7, "name": "Recruitment" },
+      { "id": 8, "name": "Payroll" }
+    ],
+    "dateOfBirth": "1998-11-03T00:00:00"
+  }
+]
+
+--------------------------------------------------------------------------------
+[TEST 2] CustomAuthFilter - Missing Authorization Header
+Command: curl.exe -i http://localhost:5245/api/Employee
+Response:
+HTTP/1.1 400 Bad Request
+Content-Type: text/plain; charset=utf-8
+Date: Tue, 21 Jul 2026 09:12:41 GMT
+Server: Kestrel
+
+Invalid request - No Auth token
+
+--------------------------------------------------------------------------------
+[TEST 3] CustomAuthFilter - Missing 'Bearer' keyword in Header
+Command: curl.exe -i -H "Authorization: Basic 12345" http://localhost:5245/api/Employee
+Response:
+HTTP/1.1 400 Bad Request
+Content-Type: text/plain; charset=utf-8
+Date: Tue, 21 Jul 2026 09:12:46 GMT
+Server: Kestrel
+
+Invalid request - Token present but Bearer unavailable
+
+--------------------------------------------------------------------------------
+[TEST 4] CustomAuthFilter - Valid Authorization Header with 'Bearer'
+Command: curl.exe -i -H "Authorization: Bearer valid_jwt_token_123" http://localhost:5245/api/Employee
+Response:
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Tue, 21 Jul 2026 09:12:50 GMT
+Server: Kestrel
+
+[
+  { "id": 1, "name": "John Doe", "salary": 75000, "permanent": true, ... },
+  { "id": 2, "name": "Jane Smith", "salary": 85000, "permanent": true, ... },
+  { "id": 3, "name": "Robert Johnson", "salary": 62000, "permanent": false, ... }
+]
+
+--------------------------------------------------------------------------------
+[TEST 5] CustomExceptionFilter - Exception Interception & Log File Writing
+Command: curl.exe -i -H "Authorization: Bearer valid_jwt_token_123" http://localhost:5245/api/Employee/exception
+Response:
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json; charset=utf-8
+Date: Tue, 21 Jul 2026 09:12:54 GMT
+Server: Kestrel
+
+{
+  "statusCode": 500,
+  "message": "An unexpected error occurred. Logged by CustomExceptionFilter.",
+  "detailedError": "Simulated exception in GET action method to test CustomExceptionFilter file logging!"
+}
+
+--- File Log Output (WebApiHandsOn3/logs/exceptions.log) ---
+[2026-07-21 14:42:54] EXCEPTION CAUGHT BY CustomExceptionFilter:
+Type: System.InvalidOperationException
+Message: Simulated exception in GET action method to test CustomExceptionFilter file logging!
+StackTrace:    at WebApiHandsOn3.Controllers.EmployeeController.GetWithException() in C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week4\ASP.NET_Core_8.0_Web\3.WebApi_HandsOn\WebApiHandsOn3\Controllers\EmployeeController.cs:line 126
+
+--------------------------------------------------------------------------------
+[TEST 6] Model Reading via [FromBody] Attribute (POST /api/Employee)
+Command: Invoke-RestMethod -Uri http://localhost:5245/api/Employee -Method Post -Headers @{ "Authorization" = "Bearer token" } -Body Payload
+Response:
+HTTP/1.1 201 Created
+Location: http://localhost:5245/api/Employee/4
+Content-Type: application/json; charset=utf-8
+
+{
+  "id": 4,
+  "name": "Alice Williams",
+  "salary": 95000,
+  "permanent": true,
+  "department": {
+    "id": 104,
+    "name": "Cloud Operations"
+  },
+  "skills": [
+    { "id": 9, "name": "Azure" },
+    { "id": 10, "name": "Kubernetes" }
+  ],
+  "dateOfBirth": "1994-04-12T00:00:00"
+}
+
+--------------------------------------------------------------------------------
+[TEST 7] OpenAPI / Swagger Endpoint JSON Inspection
+Command: curl.exe -s http://localhost:5245/swagger/v1/swagger.json
+Status: 200 OK
+ProducesResponseType configured for 200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error.
+================================================================================

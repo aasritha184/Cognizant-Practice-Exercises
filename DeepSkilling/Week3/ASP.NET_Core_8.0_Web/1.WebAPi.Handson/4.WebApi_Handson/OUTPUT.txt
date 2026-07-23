@@ -1,0 +1,160 @@
+================================================================================
+ASP.NET CORE 8.0 WEB API HANDS-ON 4 - BUILD & EXECUTION LOGS
+================================================================================
+Project Path: DeepSkilling/Week4/ASP.NET_Core_8.0_Web/4.WebApi_Handson/WebApiHandsOn4
+Target Framework: net8.0
+Date of Execution: 2026-07-21 14:58:30
+
+--------------------------------------------------------------------------------
+1. DOTNET BUILD LOG
+--------------------------------------------------------------------------------
+Command: dotnet build
+Determining projects to restore...
+Restored C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week4\ASP.NET_Core_8.0_Web\4.WebApi_Handson\WebApiHandsOn4\WebApiHandsOn4.csproj (in 1.03 sec).
+WebApiHandsOn4 -> C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week4\ASP.NET_Core_8.0_Web\4.WebApi_Handson\WebApiHandsOn4\bin\Debug\net8.0\WebApiHandsOn4.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:14.35
+
+--------------------------------------------------------------------------------
+2. ENDPOINT VERIFICATION TESTS (CRUD OPERATIONS)
+--------------------------------------------------------------------------------
+
+[TEST 1] GET /api/Employee (Initial List)
+HTTP Status: 200 OK
+Response Payload:
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "salary": 75000,
+        "permanent": true,
+        "department": { "id": 101, "name": "IT Infrastructure" },
+        "skills": [
+            { "id": 1, "name": "C#" },
+            { "id": 2, "name": "ASP.NET Core" },
+            { "id": 3, "name": "SQL Server" }
+        ],
+        "dateOfBirth": "1995-05-15T00:00:00"
+    },
+    {
+        "id": 2,
+        "name": "Jane Smith",
+        "salary": 85000,
+        "permanent": true,
+        "department": { "id": 102, "name": "Software Development" },
+        "skills": [
+            { "id": 4, "name": "Angular" },
+            { "id": 5, "name": "TypeScript" },
+            { "id": 6, "name": "REST Web API" }
+        ],
+        "dateOfBirth": "1992-08-22T00:00:00"
+    },
+    {
+        "id": 3,
+        "name": "Robert Johnson",
+        "salary": 62000,
+        "permanent": false,
+        "department": { "id": 103, "name": "Human Resources" },
+        "skills": [
+            { "id": 7, "name": "Recruitment" },
+            { "id": 8, "name": "Payroll" }
+        ],
+        "dateOfBirth": "1998-11-03T00:00:00"
+    }
+]
+
+--------------------------------------------------------------------------------
+[TEST 2] PUT Update - Validation Test (ID <= 0)
+Request Payload: { "id": 0, "name": "Test", "salary": 50000 }
+HTTP Status: 400 Bad Request
+Response Body: Invalid employee id
+
+--------------------------------------------------------------------------------
+[TEST 3] PUT Update - Validation Test (ID > 0 but Not in List)
+Request Payload: { "id": 999, "name": "Non Existent", "salary": 50000 }
+HTTP Status: 400 Bad Request
+Response Body: Invalid employee id
+
+--------------------------------------------------------------------------------
+[TEST 4] PUT Update - Valid ID = 1 Update Test
+Request Payload:
+{
+    "id": 1,
+    "name": "John Doe Updated",
+    "salary": 95000,
+    "permanent": true,
+    "department": { "id": 101, "name": "Senior IT & Architecture" },
+    "skills": [
+        { "id": 1, "name": "C# 12" },
+        { "id": 2, "name": "ASP.NET Core 8.0 Web API" },
+        { "id": 3, "name": "SQL Server 2022" }
+    ],
+    "dateOfBirth": "1995-05-15T00:00:00"
+}
+HTTP Status: 200 OK
+Response Payload:
+{
+    "id": 1,
+    "name": "John Doe Updated",
+    "salary": 95000,
+    "permanent": true,
+    "department": { "id": 101, "name": "Senior IT & Architecture" },
+    "skills": [
+        { "id": 1, "name": "C# 12" },
+        { "id": 2, "name": "ASP.NET Core 8.0 Web API" },
+        { "id": 3, "name": "SQL Server 2022" }
+    ],
+    "dateOfBirth": "1995-05-15T00:00:00"
+}
+
+--------------------------------------------------------------------------------
+[TEST 5] POST Create New Employee Test
+Request Payload:
+{
+    "name": "Michael Brown",
+    "salary": 88000,
+    "permanent": true,
+    "department": { "id": 105, "name": "DevOps & Cloud" },
+    "skills": [
+        { "id": 11, "name": "Docker" },
+        { "id": 12, "name": "Kubernetes" }
+    ],
+    "dateOfBirth": "1993-09-10T00:00:00"
+}
+HTTP Status: 201 Created
+Response Payload:
+{
+    "id": 4,
+    "name": "Michael Brown",
+    "salary": 88000,
+    "permanent": true,
+    "department": { "id": 105, "name": "DevOps & Cloud" },
+    "skills": [
+        { "id": 11, "name": "Docker" },
+        { "id": 12, "name": "Kubernetes" }
+    ],
+    "dateOfBirth": "1993-09-10T00:00:00"
+}
+
+--------------------------------------------------------------------------------
+[TEST 6] DELETE Employee ID = 3 Test
+HTTP Status: 200 OK
+Response Payload:
+{
+    "message": "Employee with Id = 3 successfully deleted."
+}
+
+--------------------------------------------------------------------------------
+[TEST 7] GET ALL EMPLOYEES (FINAL STATE VERIFICATION)
+HTTP Status: 200 OK
+Response Payload:
+[
+    { "id": 1, "name": "John Doe Updated", "salary": 95000, "permanent": true, ... },
+    { "id": 2, "name": "Jane Smith", "salary": 85000, "permanent": true, ... },
+    { "id": 4, "name": "Michael Brown", "salary": 88000, "permanent": true, ... }
+]
+================================================================================

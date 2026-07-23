@@ -1,0 +1,35 @@
+================================================================================
+KAFKA INTEGRATION WITH C# - COMPILATION & BUILD LOGS
+================================================================================
+Date of Execution: 2026-07-22 08:45:00
+
+--------------------------------------------------------------------------------
+1. ChatConsoleApp BUILD LOG
+--------------------------------------------------------------------------------
+Command: dotnet build in DeepSkilling/Week4/ASP.NET_Core_8.0_Web/6.WebApi_HandsOn/ChatConsoleApp
+
+Determining projects to restore...
+Restored C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week4\ASP.NET_Core_8.0_Web\6.WebApi_HandsOn\ChatConsoleApp\ChatConsoleApp.csproj (in 5.04 sec).
+ChatConsoleApp -> C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week4\ASP.NET_Core_8.0_Web\6.WebApi_HandsOn\ChatConsoleApp\bin\Debug\net8.0\ChatConsoleApp.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:16.63
+
+--------------------------------------------------------------------------------
+2. ChatWinFormsApp BUILD LOG
+--------------------------------------------------------------------------------
+Command: dotnet build in DeepSkilling/Week4/ASP.NET_Core_8.0_Web/6.WebApi_HandsOn/ChatWinFormsApp
+
+Determining projects to restore...
+Restored C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week4\ASP.NET_Core_8.0_Web\6.WebApi_HandsOn\ChatWinFormsApp\ChatWinFormsApp.csproj (in 938 ms).
+ChatWinFormsApp -> C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week4\ASP.NET_Core_8.0_Web\6.WebApi_HandsOn\ChatWinFormsApp\bin\Debug\net8.0-windows\ChatWinFormsApp.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:12.35
+================================================================================
