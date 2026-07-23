@@ -1,0 +1,88 @@
+================================================================================
+ASP.NET CORE WEB API WITH SWAGGER & POSTMAN - EXECUTION OUTPUT
+================================================================================
+
+[Target Subfolder]: Week 4 ASP.NET Core 8.0 Web / 2.WbApiHandson
+[Project Path]: DeepSkilling/Week4/ASP.NET_Core_8.0_Web/2.WbApiHandson/WebAPIHandson
+[Packages Installed]: Swashbuckle.AspNetCore (v10.2.3 / OpenApiInfo v1)
+
+--------------------------------------------------------------------------------
+1. SWAGGER DOCUMENTATION METADATA VERIFICATION
+--------------------------------------------------------------------------------
+Endpoint: GET http://localhost:5120/swagger/v1/swagger.json
+Title: Swagger Demo
+Version: v1
+Contact: John Doe (john@xyzmail.com)
+Terms of Service: http://www.example.com/terms
+License: License Terms (http://www.example.com)
+
+--------------------------------------------------------------------------------
+2. INITIAL EMPLOYEE LIST (GET http://localhost:5120/api/Emp)
+--------------------------------------------------------------------------------
+HTTP Status Code: 200 OK
+Response Body:
+[
+  { "id": 101, "name": "Alice Smith", "department": "IT", "salary": 75000 },
+  { "id": 102, "name": "Bob Johnson", "department": "HR", "salary": 62000 },
+  { "id": 103, "name": "Charlie Brown", "department": "Finance", "salary": 80000 }
+]
+
+--------------------------------------------------------------------------------
+3. GET EMPLOYEE BY ID (GET http://localhost:5120/api/Emp/101)
+--------------------------------------------------------------------------------
+HTTP Status Code: 200 OK
+Response Body:
+{ "id": 101, "name": "Alice Smith", "department": "IT", "salary": 75000 }
+
+--------------------------------------------------------------------------------
+4. POSTMAN SIMULATION - POST NEW EMPLOYEE (POST http://localhost:5120/api/Emp)
+--------------------------------------------------------------------------------
+Request Headers: Content-Type: application/json
+Request Body:
+{
+  "id": 104,
+  "name": "Diana Prince",
+  "department": "Engineering",
+  "salary": 95000
+}
+HTTP Status Code: 201 Created
+Response Body:
+{ "id": 104, "name": "Diana Prince", "department": "Engineering", "salary": 95000 }
+
+--------------------------------------------------------------------------------
+5. POSTMAN SIMULATION - PUT UPDATE EMPLOYEE (PUT http://localhost:5120/api/Emp/101)
+--------------------------------------------------------------------------------
+Request Body:
+{
+  "name": "Alice Smith (Promoted)",
+  "department": "IT Leadership",
+  "salary": 85000
+}
+HTTP Status Code: 200 OK
+Response Body:
+{
+  "message": "Employee ID 101 updated successfully.",
+  "employee": { "id": 101, "name": "Alice Smith (Promoted)", "department": "IT Leadership", "salary": 85000 }
+}
+
+--------------------------------------------------------------------------------
+6. POSTMAN SIMULATION - DELETE EMPLOYEE (DELETE http://localhost:5120/api/Emp/103)
+--------------------------------------------------------------------------------
+HTTP Status Code: 200 OK
+Response Body:
+{ "message": "Employee ID 103 deleted successfully." }
+
+--------------------------------------------------------------------------------
+7. FINAL EMPLOYEE LIST VERIFICATION (GET http://localhost:5120/api/Emp)
+--------------------------------------------------------------------------------
+HTTP Status Code: 200 OK
+Response Body:
+[
+  { "id": 101, "name": "Alice Smith (Promoted)", "department": "IT Leadership", "salary": 85000 },
+  { "id": 102, "name": "Bob Johnson", "department": "HR", "salary": 62000 },
+  { "id": 104, "name": "Diana Prince", "department": "Engineering", "salary": 95000 }
+]
+
+================================================================================
+Status: SWAGGER AND POSTMAN TEST SUITE EXECUTED AND VERIFIED SUCCESSFULLY
+================================================================================
