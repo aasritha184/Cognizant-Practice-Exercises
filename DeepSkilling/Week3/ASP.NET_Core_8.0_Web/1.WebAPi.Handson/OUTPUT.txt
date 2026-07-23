@@ -1,0 +1,86 @@
+================================================================================
+ASP.NET CORE WEB API HANDS-ON EXERCISE - EXECUTION OUTPUT
+================================================================================
+
+[Target Folder]: Week 4 ASP.NET Core 8.0 Web
+[Project Path]: DeepSkilling/Week4/ASP.NET_Core_8.0_Web/1.WebAPi.Handson/WebAPIHandson
+[Controller]: ValuesController (Controllers/ValuesController.cs)
+
+--------------------------------------------------------------------------------
+1. HTTP GET - ALL VALUES (200 OK)
+--------------------------------------------------------------------------------
+Request: GET http://localhost:5045/api/values
+Response Code: 200 OK
+Response Body:
+[
+  "value1",
+  "value2",
+  "value3"
+]
+
+--------------------------------------------------------------------------------
+2. HTTP GET - BY ID (200 OK)
+--------------------------------------------------------------------------------
+Request: GET http://localhost:5045/api/values/1
+Response Code: 200 OK
+Response Body:
+"value2"
+
+--------------------------------------------------------------------------------
+3. HTTP POST - CREATE NEW VALUE (201 Created)
+--------------------------------------------------------------------------------
+Request: POST http://localhost:5045/api/values
+Body: "value4"
+Response Code: 201 Created
+Response Body:
+{
+  "id": 3,
+  "value": "value4"
+}
+
+--------------------------------------------------------------------------------
+4. HTTP PUT - UPDATE VALUE BY ID (200 OK)
+--------------------------------------------------------------------------------
+Request: PUT http://localhost:5045/api/values/0
+Body: "updated_value1"
+Response Code: 200 OK
+Response Body:
+{
+  "message": "Value at ID 0 updated successfully.",
+  "updatedValue": "updated_value1"
+}
+
+--------------------------------------------------------------------------------
+5. HTTP DELETE - DELETE VALUE BY ID (200 OK)
+--------------------------------------------------------------------------------
+Request: DELETE http://localhost:5045/api/values/2
+Response Code: 200 OK
+Response Body:
+{
+  "message": "Value at ID 2 deleted successfully.",
+  "deletedValue": "value3"
+}
+
+--------------------------------------------------------------------------------
+6. HTTP GET - VERIFY FINAL STATE
+--------------------------------------------------------------------------------
+Request: GET http://localhost:5045/api/values
+Response Code: 200 OK
+Response Body:
+[
+  "updated_value1",
+  "value2",
+  "value4"
+]
+
+--------------------------------------------------------------------------------
+7. DEMONSTRATION OF HTTP STATUS CODES
+--------------------------------------------------------------------------------
+- 400 Bad Request: GET http://localhost:5045/api/values/-1 -> Error: (400) Bad Request
+- 401 Unauthorized: GET http://localhost:5045/api/values/unauthorized-demo -> Error: (401) Unauthorized
+- 404 Not Found: GET http://localhost:5045/api/values/99 -> Error: (404) Not Found
+- 500 Internal Server Error: GET http://localhost:5045/api/values/error-demo -> Error: (500) Internal Server Error
+
+================================================================================
+Status: ALL WEB API ACTIONS EXECUTED AND VERIFIED SUCCESSFULLY
+================================================================================
