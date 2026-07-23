@@ -1,0 +1,77 @@
+================================================================================
+MICROSERVICES AUTHENTICATION & AUTHORIZATION - BUILD & EXECUTION LOGS
+================================================================================
+Project Path: DeepSkilling/Week5/MicroServices/MicroServicesAuthDemo
+Target Framework: net8.0
+Date of Execution: 2026-07-22 09:08:00
+
+--------------------------------------------------------------------------------
+1. DOTNET BUILD LOG
+--------------------------------------------------------------------------------
+Command: dotnet build
+Determining projects to restore...
+Restored C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week5\MicroServices\MicroServicesAuthDemo\MicroServicesAuthDemo.csproj (in 1.08 sec).
+MicroServicesAuthDemo -> C:\Users\aluri\OneDrive\Desktop\CTS_Deep_Skilling\DeepSkilling\Week5\MicroServices\MicroServicesAuthDemo\bin\Debug\net8.0\MicroServicesAuthDemo.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:15.11
+
+--------------------------------------------------------------------------------
+2. ENDPOINT VERIFICATION TESTS
+--------------------------------------------------------------------------------
+
+[TEST 1] Secure Endpoint Access Without Token (GET /api/Secure/data)
+Command: Invoke-RestMethod -Uri http://localhost:5248/api/Secure/data -Method Get
+Response Status: 401 Unauthorized
+
+--------------------------------------------------------------------------------
+[TEST 2] Login with Admin Credentials (POST /api/Auth/login)
+Command: Invoke-RestMethod -Uri http://localhost:5248/api/Auth/login -Method Post -Body '{"username":"admin","password":"password"}'
+HTTP Status: 200 OK
+Response Payload:
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc4NDY5NTE5MiwiaXNzIjoiTXlBdXRoU2VydmVyIiwiYXVkIjoiTXlBcGlVc2VycyJ9.IUXSTNNWhZsZXLDsIHnV5QsCcP300LBlCGSf4tZ4ywk"
+}
+
+--------------------------------------------------------------------------------
+[TEST 3] Login with User Credentials (POST /api/Auth/login)
+Command: Invoke-RestMethod -Uri http://localhost:5248/api/Auth/login -Method Post -Body '{"username":"user","password":"password"}'
+HTTP Status: 200 OK
+Response Payload:
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidXNlciIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3ODQ2Mjg5ODAsImlzcyI6Ik15QXV0aFNlcnZlciIsImF1ZCI6Ik15QXBpVXNlcnMifQ.7CV0A6YH3ijQ-cpEWBx5h4aM_poyf9U77mkloPW-xh8"
+}
+
+--------------------------------------------------------------------------------
+[TEST 4] Secure Endpoint Access with Valid JWT (GET /api/Secure/data)
+Command: Invoke-RestMethod -Uri http://localhost:5248/api/Secure/data -Headers @{"Authorization" = "Bearer <adminToken>"}
+HTTP Status: 200 OK
+Response Payload:
+This is protected data.
+
+--------------------------------------------------------------------------------
+[TEST 5] Admin Endpoint Access with Admin Role (GET /api/Admin/dashboard)
+Command: Invoke-RestMethod -Uri http://localhost:5248/api/Admin/dashboard -Headers @{"Authorization" = "Bearer <adminToken>"}
+HTTP Status: 200 OK
+Response Payload:
+Welcome to the admin dashboard.
+
+--------------------------------------------------------------------------------
+[TEST 6] Admin Endpoint Access with User Role (GET /api/Admin/dashboard)
+Command: Invoke-RestMethod -Uri http://localhost:5248/api/Admin/dashboard -Headers @{"Authorization" = "Bearer <userToken>"}
+HTTP Status: 403 Forbidden
+Result: Access Forbidden for User role, as expected.
+
+--------------------------------------------------------------------------------
+[TEST 7] Expired Token Test and Response Header Inspection
+Command: GET http://localhost:5248/api/Auth/login-expired
+Result: Expired Token Issued.
+Command: GET http://localhost:5248/api/Secure/data -Headers @{"Authorization" = "Bearer <expiredToken>"}
+HTTP Status: 401 Unauthorized
+Response Headers:
+Token-Expired: true
+Result: Custom header 'Token-Expired: true' found in response. Expiry handler validated successfully.
+================================================================================
