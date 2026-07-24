@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery Exercises</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+  <h1 id="heading">Hello</h1>
+  <p>First paragraph</p>
+  <p id="para2">Second paragraph</p>
+  <button id="changeBtn">Change Text</button>
+  <button id="hideBtn">Hide Paragraph</button>
+
+  <div class="box" style="width:60px;height:60px;background:blue;display:inline-block;"></div>
+  <button id="fadeBtn">Fade Out</button>
+
+  <input type="text" id="itemInput">
+  <button id="addBtn">Add Item</button>
+  <ul id="itemList"></ul>
+
+  <button id="colorBtn">Red</button>
+  <div id="colorBox" style="width:100px;height:100px;border:1px solid black;"></div>
+
+  <script>
+    $(document).ready(function () {
+      $("#changeBtn").click(function () {
+        $("#heading").text("Changed!");
+      });
+
+      $("#hideBtn").click(function () {
+        $("#para2").hide();
+      });
+
+      $("#fadeBtn").click(function () {
+        $(".box").fadeOut();
+      });
+
+      $("#addBtn").click(function () {
+        $("#itemList").append("<li>" + $("#itemInput").val() + "</li>");
+      });
+
+      $("#colorBtn").click(function () {
+        $("#colorBox").css("background-color", "red");
+      });
+
+      $("#colorBox").dblclick(function () {
+        $(this).css("background-color", "white");
+      });
+    });
+  </script>
+</body>
+</html>

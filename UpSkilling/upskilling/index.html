@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Local Community Event Portal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav>
+    <a href="#events">Events</a>
+    <a href="#contact">Contact</a>
+    <a href="help.html" target="_blank">Help</a>
+  </nav>
+
+  <div id="welcomeBanner">
+    <h1>Welcome to the Community Portal</h1>
+    <span style="color:red; font-weight:bold;">Register now, limited seats!</span>
+  </div>
+
+  <section id="events">
+    <h2>Past Events</h2>
+    <table>
+      <tr>
+        <td><img src="https://picsum.photos/150" alt="Tech meetup" title="Tech Meetup" class="framed" id="galleryImg"></td>
+        <td><img src="https://picsum.photos/151" alt="Conference" title="AI Conference" class="framed"></td>
+      </tr>
+    </table>
+  </section>
+
+  <section id="register">
+    <h2>Event Registration</h2>
+    <form id="regForm">
+      <input type="text" name="name" placeholder="Name" required autofocus>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="date" name="date" required>
+      <select name="eventType">
+        <option value="workshop">Workshop</option>
+        <option value="meetup">Meetup</option>
+      </select>
+      <textarea name="message" id="feedbackText" placeholder="Message"></textarea>
+      <span id="charCount">0 characters</span>
+      <input type="tel" id="phone" placeholder="Phone">
+      <span id="phoneError"></span>
+      <button type="submit">Register</button>
+      <output id="confirmMsg"></output>
+    </form>
+  </section>
+
+  <section id="invite">
+    <h2>Promo Video</h2>
+    <video id="promoVideo" width="320" controls>
+      <source src="promo.mp4" type="video/mp4">
+    </video>
+    <p id="videoMsg"></p>
+  </section>
+
+  <section id="contact">
+    <h2>Preferences</h2>
+    <select id="prefType">
+      <option value="workshop">Workshop</option>
+      <option value="meetup">Meetup</option>
+    </select>
+    <button id="saveBtn">Save</button>
+    <button id="clearBtn">Clear</button>
+    <p id="prefMsg"></p>
+
+    <button id="geoBtn">Find Nearby Events</button>
+    <p id="geoMsg"></p>
+  </section>
+
+  <script src="main.js"></script>
+</body>
+</html>
